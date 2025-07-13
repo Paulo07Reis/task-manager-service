@@ -29,6 +29,12 @@ public class Task {
         return this;
     }
 
+    public Task insert(){
+        return builderFrom(this)
+                .withState(Status.INSERT)
+                .build();
+    }
+
     public static Builder builder(){
         return new Builder();
     }
