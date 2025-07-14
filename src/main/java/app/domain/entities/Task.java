@@ -3,14 +3,12 @@ package app.domain.entities;
 import app.domain.enums.Status;
 import app.domain.services.TaskService;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class Task {
     private String title;
     private String description;
@@ -44,8 +42,8 @@ public class Task {
     }
 
     @Data
-    @AllArgsConstructor
     @NoArgsConstructor
+    @AllArgsConstructor
     public static class Builder {
         private String title;
         private String description;
