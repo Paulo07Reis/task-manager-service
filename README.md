@@ -18,17 +18,18 @@ O sistema será projetado para ser robusto e escalável, capaz de lidar com um g
 <li>Padrão de Projeto Builder.</li>
 </ul>
 
----
-
-### 📂 Estrutura do Repositório
-📁 src<br>
-├── fundamentals<br>
-├── poo<br>
-├── projects<br>
-└── springboot<br>
-
-
 --- 
 
 ### 🚀 Tecnologias e Ferramentas
-[![My Skills](https://skillicons.dev/icons?i=java,spring,kafka,mongodb)](https://skillicons.dev)
+[![My Skills](https://skillicons.dev/icons?i=java,spring,kafka,mongodb,gradle,)](https://skillicons.dev)
+
+---
+### 💉 Dependências 
+<img src="statics/dependencies.png"/>
+
+---
+### ⚙️ Controller
+<img src="statics/controller.png"/>
+
+
+
