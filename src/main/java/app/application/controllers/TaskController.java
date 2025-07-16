@@ -6,9 +6,9 @@ import app.domain.enums.Status;
 import app.domain.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
-import java.util.List;
 
 @RestController
 @RequestMapping("/task")
@@ -43,5 +43,14 @@ public class TaskController {
     ){
         return service.insertTask(converter.toDomain(task))
                 .map(converter::toDto);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public Mono<Void> delete(
+            @PathVariable String id
+    ){
+        return Mono.just(id)
+                .flatMap(service::deleteById);
     }
 }
