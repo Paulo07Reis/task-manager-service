@@ -2,6 +2,7 @@ package app.application.converters;
 
 import app.application.dtos.TaskDto;
 import app.domain.entities.Task;
+import app.domain.enums.Status;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class TaskConverter {
         return Optional.ofNullable(task)
                 .map(source -> {
                     TaskDto dto = new TaskDto();
+                    dto.setId(source.getId());
                     dto.setTitle(source.getTitle());
                     dto.setDescription(source.getDescription());
                     dto.setPriority(source.getPriority());
@@ -41,5 +43,15 @@ public class TaskConverter {
         return Optional.ofNullable(list)
                 .map(array -> array.stream().map(this::toDto).collect(Collectors.toList()))
                 .orElse(new ArrayList<>());
+    }
+
+    public Task convert(String id, String title, String description, int priority, Status status){
+        return Task.builder()
+                .withId(id)
+                .withTitle(title)
+                .withDescription(description)
+                .withPriority(priority)
+                .withState(status)
+                .build();
     }
 }
