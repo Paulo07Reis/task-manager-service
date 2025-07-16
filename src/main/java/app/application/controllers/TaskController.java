@@ -2,8 +2,10 @@ package app.application.controllers;
 
 import app.application.converters.TaskConverter;
 import app.application.dtos.TaskDto;
+import app.domain.enums.Status;
 import app.domain.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 import java.util.List;
@@ -19,8 +21,20 @@ public class TaskController {
     private TaskConverter converter;
 
     @GetMapping
-    public Mono<List<TaskDto>> getTasks() {
-        return service.listTasks().map(converter::convertList);
+    public Page<TaskDto> getTasks(
+            @RequestParam(required = false) String id,
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) String description,
+            @RequestParam(required = false, defaultValue = "0") int priority,
+            @RequestParam(required = false) Status status,
+            @RequestParam(value = "pageNumber", defaultValue = "0") Integer pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize
+    ) {
+        return service.findPaginated(
+                converter.convert(id, title, description, priority, status),
+                pageNumber,
+                pageSize
+        ).map(converter::toDto);
     }
 
     @PostMapping
