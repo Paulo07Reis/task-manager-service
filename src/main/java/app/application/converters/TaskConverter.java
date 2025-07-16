@@ -1,4 +1,4 @@
-package app.application.converter;
+package app.application.converters;
 
 import app.application.dtos.TaskDto;
 import app.domain.entities.Task;
