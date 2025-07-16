@@ -1,8 +1,7 @@
 package app.application.controllers;
 
-import app.application.converter.TaskConverter;
+import app.application.converters.TaskConverter;
 import app.application.dtos.TaskDto;
-import app.domain.entities.Task;
 import app.domain.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +25,9 @@ public class TaskController {
 
     @PostMapping
     public Mono<TaskDto> createTak(
-            @RequestBody Task task
+            @RequestBody TaskDto task
     ){
-        return service.insertTask(task).map(converter::toDto);
+        return service.insertTask(converter.toDomain(task))
+                .map(converter::toDto);
     }
 }
