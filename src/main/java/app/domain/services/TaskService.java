@@ -3,7 +3,6 @@ package app.domain.services;
 import app.domain.entities.Task;
 import java.util.ArrayList;
 import java.util.List;
-
 import app.resource.repositories.TaskCustomRepository;
 import app.resource.repositories.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +34,9 @@ public class TaskService {
     private Mono<Task> save(Task task){
         return Mono.just(task)
                 .map(repository::save);
+    }
+
+    public Mono<Void> deleteById(String id){
+        return Mono.fromRunnable(() -> repository.deleteById(id));
     }
 }
