@@ -48,6 +48,7 @@ public class Task {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Builder {
+        private String id;
         private String title;
         private String description;
         private int priority;
@@ -58,6 +59,11 @@ public class Task {
             this.description = task.description;
             this.priority = task.priority;
             this.status = task.status;
+        }
+
+        public Builder withId(String id){
+            this.id = id;
+            return this;
         }
 
         public Builder withTitle(String title){
