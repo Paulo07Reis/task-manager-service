@@ -15,11 +15,13 @@ public class TaskService {
 
     public static List<Task> tasks = new ArrayList<>();
 
-    @Autowired
-    private TaskRepository repository;
+    private final TaskRepository repository;
+    private final TaskCustomRepository customRepository;
 
-    @Autowired
-    private TaskCustomRepository customRepository;
+    public TaskService(TaskRepository repository, TaskCustomRepository taskCustomRepository){
+        this.repository = repository;
+        this.customRepository = taskCustomRepository;
+    }
 
     public Mono<Task> insertTask(Task task){
         return Mono.just(task)
