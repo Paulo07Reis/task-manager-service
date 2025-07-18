@@ -4,7 +4,6 @@ import app.application.converters.TaskConverter;
 import app.application.dtos.TaskDto;
 import app.domain.enums.Status;
 import app.domain.services.TaskService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -14,11 +13,13 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/task")
 public class TaskController {
 
-    @Autowired
-    private TaskService service;
+    private final TaskService service;
+    private final TaskConverter converter;
 
-    @Autowired
-    private TaskConverter converter;
+    public TaskController(TaskService service, TaskConverter converter){
+        this.service = service;
+        this.converter = converter;
+    }
 
     @GetMapping
     public Page<TaskDto> getTasks(
