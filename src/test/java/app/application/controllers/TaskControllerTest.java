@@ -7,10 +7,11 @@ import app.domain.services.TaskService;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 public class TaskControllerTest {
@@ -26,16 +27,16 @@ public class TaskControllerTest {
 
     @Test
     public void controller_must_return_ok_when_save_successfully() {
-        Mockito.when(converter.toDto(Mockito.any(Task.class))).thenReturn(new TaskDto());
-        Mockito.when(service.insertTask(Mockito.any())).thenReturn(Mono.just(new Task()));
+        when(converter.toDto(any(Task.class))).thenReturn(new TaskDto());
+        when(service.insertTask(any())).thenReturn(Mono.just(new Task()));
 
         WebTestClient client = WebTestClient.bindToController(controller).build();
 
         client.post()
                 .uri("/task")
-                .bodyValue(new Task())
+                .bodyValue(new TaskDto())
                 .exchange()
                 .expectStatus().isOk()
-                .expectBody(Task.class);
+                .expectBody(TaskDto.class);
     }
 }
