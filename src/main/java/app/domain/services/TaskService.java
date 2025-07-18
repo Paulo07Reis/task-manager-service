@@ -27,17 +27,11 @@ public class TaskService {
 
     public Mono<Task> insertTask(Task task){
         return Mono.just(task)
-//                .map(Task::insert)
-                .flatMap(it -> doError())
+                .map(Task::insert)
+                .flatMap(this::save)
                 .doOnError(error -> LOGGER.error("Error during save task. Title {}", task.getTitle(), error))
                 .onErrorResume(it -> Mono.just(Task.builder().withTitle("Error").build()));
     }
-
-    public Mono<Task> doError(){
-        return Mono.error(RuntimeException::new);
-    }
-
-
 
     public Page<Task> findPaginated(Task task, Integer pageNumber, Integer pageSize){
         return customRepository.findPaginated(task, pageNumber, pageSize);
