@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import app.resource.repositories.TaskCustomRepository;
 import app.resource.repositories.TaskRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
