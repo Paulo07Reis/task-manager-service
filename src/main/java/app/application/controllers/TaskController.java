@@ -4,6 +4,8 @@ import app.application.converters.TaskConverter;
 import app.application.dtos.TaskDto;
 import app.domain.enums.Status;
 import app.domain.services.TaskService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,7 @@ public class TaskController {
 
     private final TaskService service;
     private final TaskConverter converter;
+    private static final Logger LOGGER = LoggerFactory.getLogger(TaskController.class);
 
     public TaskController(TaskService service, TaskConverter converter){
         this.service = service;
@@ -43,6 +46,7 @@ public class TaskController {
             @RequestBody TaskDto task
     ){
         return service.insertTask(converter.toDomain(task))
+                .doOnNext(it -> LOGGER.info("Saved task with id {}", it.getId()))
                 .map(converter::toDto);
     }
 
@@ -52,6 +56,7 @@ public class TaskController {
             @PathVariable String id
     ){
         return Mono.just(id)
+                .doOnNext(it -> LOGGER.info("Deleting task with id {}", id))
                 .flatMap(service::deleteById);
     }
 }
