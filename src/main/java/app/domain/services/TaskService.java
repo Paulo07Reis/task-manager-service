@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import app.resource.repositories.TaskCustomRepository;
 import app.resource.repositories.TaskRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -16,6 +18,7 @@ public class TaskService {
 
     private final TaskRepository repository;
     private final TaskCustomRepository customRepository;
+    private static final Logger LOGGER = LoggerFactory.getLogger(TaskService.class);
 
     public TaskService(TaskRepository repository, TaskCustomRepository taskCustomRepository){
         this.repository = repository;
@@ -34,6 +37,7 @@ public class TaskService {
 
     private Mono<Task> save(Task task){
         return Mono.just(task)
+                .doOnNext(t -> LOGGER.info("Saving task with title {}", t.getTitle()))
                 .map(repository::save);
     }
 
